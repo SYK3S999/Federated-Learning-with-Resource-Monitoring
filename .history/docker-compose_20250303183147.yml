@@ -1,0 +1,57 @@
+version: '3.8'
+services:
+  server:
+    build: ./server
+    ports:
+      - "8080:8080"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - fl-net
+    volumes:
+      - ./data:/app/data  # Shared data directory
+
+  client1:
+    build: ./client
+    depends_on:
+      - server
+    environment:
+      - CLIENT_ID=0  # First partition
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - fl-net
+    volumes:
+      - ./data:/app/data
+
+  client2:
+    build: ./client
+    depends_on:
+      - server
+    environment:
+      - CLIENT_ID=1  # Second partition
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - fl-net
+    volumes:
+      - ./data:/app/data
+
+networks:
+  fl-net:
+    driver: bridge

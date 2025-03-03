@@ -1,0 +1,4 @@
+flwr==1.5.0
+torch==2.4.1  # Latest stable, CUDA 12.4 support
+numpy==1.25.0
+psutil==5.9.5

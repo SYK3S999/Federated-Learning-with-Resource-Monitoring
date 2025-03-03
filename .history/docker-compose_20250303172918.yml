@@ -1,0 +1,47 @@
+version: '3.8'
+services:
+  server:
+    build: ./server
+    ports:
+      - "8080:8080"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - fl-net
+
+  client1:
+    build: ./client
+    depends_on:
+      - server
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - fl-net
+
+  client2:
+    build: ./client
+    depends_on:
+      - server
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - fl-net
+
+networks:
+  fl-net:
+    driver: bridge
