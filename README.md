@@ -4,8 +4,9 @@ A federated learning (FL) framework built with Flower, PyTorch, and Docker, feat
 
 ## Features
 
-- **Federated Learning**: Uses Flower’s FedAvg strategy for distributed training.
-- **Resource Monitoring**: Tracks CPU usage, network TX (MB), and estimated energy (J/s) per client/server task with `psutil`.
+- **Federated Learning**: Implements Flower’s FedAvg strategy to train a CNN on MNIST in a distributed setup.
+- **Dataset**: Uses MNIST (handwritten digits, 60k train, 10k test), partitioned across clients.
+- **Resource Monitoring**: Tracks CPU usage, network TX (MB), and estimated energy (J/s) per task with `psutil`.
 - **Dockerized**: Runs in isolated containers (1 server, 2 clients) with GPU support (NVIDIA CUDA 12.4.1).
 - **Real-Time**: Logs stats at key steps (Pre/Post-Training, Eval) every ~6-7s round.
 - **Scalable**: Ready for DRL-based client selection and resource allocation (e.g., PPO).
